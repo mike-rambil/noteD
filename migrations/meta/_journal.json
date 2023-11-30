@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1701368798774,
+      "tag": "0000_boring_random",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1701369078659,
+      "tag": "0001_spicy_silver_samurai",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1701369789550,
+      "tag": "0002_careless_rocket_racer",
+      "breakpoints": true
+    }
+  ]
+}
