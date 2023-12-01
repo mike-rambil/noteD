@@ -4,7 +4,7 @@
 import { useSupabaseUser } from '@/lib/providers/supabase-user-provider';
 // import { createFolder } from '@/lib/supabase/queries';
 import { Folder } from '@/lib/supabase/supabase.types';
-// import { PlusIcon } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
 import TooltipComponent from '../global/tooltip-component';
@@ -12,7 +12,7 @@ import { Accordion } from '../ui/accordion';
 import { useToast } from '../ui/use-toast';
 // import Dropdown from './Dropdown';
 
-import { useAppState } from "@/lib/providers/state-provider";
+import { useAppState } from '@/lib/providers/state-provider';
 import { createFolder } from '@/lib/supabase/queries';
 
 interface FoldersDropdownListProps {
@@ -26,12 +26,12 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
 }) => {
   // useSupabaseRealtime();
   const { state, dispatch, folderId } = useAppState();
-//   const { open, setOpen } = useSubscriptionModal();
+  // const { open, setOpen } = useSubscriptionModal();
   const { toast } = useToast();
   const [folders, setFolders] = useState(workspaceFolders);
   const { subscription } = useSupabaseUser();
 
-//effec set nitial satte server app state
+  //effec set nitial satte server app state
   useEffect(() => {
     if (workspaceFolders.length > 0) {
       dispatch({
@@ -59,10 +59,10 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
     );
   }, [state]);
 
-//add folder
+  //add folder
   const addFolderHandler = async () => {
     if (folders.length >= 3 && !subscription) {
-      setOpen(true);
+      // setOpen(true); //TODO
       return;
     }
     const newFolder: Folder = {
@@ -96,8 +96,9 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
 
   return (
     <>
-       <div
-        className='flex
+      <div
+        className='
+        flex
          sticky
          z-20
          top-0
@@ -109,44 +110,47 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
          items-center
          pr-4
          text-Neutrals/neutrals-8
+         
    '
-       >
-         // <span 
-//           className='text-Neutrals-8
-//         font-bold
-//         text-xs'
-//         >
-//           FOLDERS
-//         </span>}
-//         <TooltipComponent message='Create Folder'>
-//           <PlusIcon
-//             onClick={addFolderHandler}
-//             size={16}
-//             className='group-hover/title:inline-block
-//             hidden
-//             cursor-pointer
-//             hover:dark:text-white
-//           '
-//           />
-//         </TooltipComponent>
-//       </div>
-//       <Accordion
-//         type='multiple'
-//         defaultValue={[folderId || '']}
-//         className='pb-20'
-//       >
-//         {folders
-//           .filter((folder) => !folder.inTrash)
-//           .map((folder) => (
-//             <Dropdown
-//               key={folder.id}
-//               title={folder.title}
-//               listType='folder'
-//               id={folder.id}
-//               iconId={folder.iconId}
-//             />
-//           ))}
-//       </Accordion>
+      >
+        <span
+          className='text-Neutrals-8
+         font-bold
+         text-xs
+         
+         '
+        >
+          FOLDERS
+        </span>
+        <TooltipComponent message='Create Folder'>
+          <PlusIcon
+            onClick={addFolderHandler}
+            size={16}
+            className='group-hover/title:inline-block
+             hidden
+             cursor-pointer
+             hover:dark:text-white
+           '
+          />
+        </TooltipComponent>
+      </div>
+      <Accordion
+        type='multiple'
+        defaultValue={[folderId || '']}
+        className='pb-20'
+      >
+        {/* {folders
+          .filter((folder) => !folder.inTrash)
+          .map((folder) => (
+            <Dropdown
+              key={folder.id}
+              title={folder.title}
+              listType='folder'
+              id={folder.id}
+              iconId={folder.iconId}
+            />
+          ))} */}
+      </Accordion>{' '}
     </>
   );
 };
