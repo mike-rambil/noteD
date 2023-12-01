@@ -22,6 +22,13 @@
       "when": 1701369789550,
       "tag": "0002_careless_rocket_racer",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1701396818342,
+      "tag": "0003_bored_power_man",
+      "breakpoints": true
     }
   ]
 }

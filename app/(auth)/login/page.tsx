@@ -12,8 +12,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 // import { actionLoginUser } from '@/lib/server-actions/auth-actions';
-import { actionLoginUser } from '@/app/lib/server-actions/auth-actions';
-import { FormSchema } from '@/app/lib/types';
+import { actionLoginUser } from '@/lib/server-actions/auth-actions';
+import { FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
