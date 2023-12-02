@@ -3,7 +3,7 @@ import { MAX_FOLDERS_FREE_PLAN } from '@/lib/constants';
 import { useAppState } from '@/lib/providers/state-provider';
 import { Subscription } from '@/lib/supabase/supabase.types';
 import React, { useEffect, useState } from 'react';
-import CypressDiamondIcon from '../icons/notedDiamondIcon';
+import CypressDiamondIcon from '../icons/cypressDiamondIcon';
 import { Progress } from '../ui/progress';
 
 interface PlanUsageProps {
