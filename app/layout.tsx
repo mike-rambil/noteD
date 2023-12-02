@@ -1,6 +1,8 @@
 import { ThemeProvider } from '@/lib/providers/next-theme-provider';
 import AppStateProvider from '@/lib/providers/state-provider';
 // import db from '@/lib/supabase/db';
+import { Toaster } from '@/components/ui/toaster';
+import { SocketProvider } from '@/lib/providers/socket-provider';
 import { SupabaseUserProvider } from '@/lib/providers/supabase-user-provider';
 import type { Metadata } from 'next';
 import { DM_Sans, Inter } from 'next/font/google';
@@ -25,7 +27,12 @@ export default function RootLayout({
       <body className={twMerge('bg-background', inter.className)}>
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
           <AppStateProvider>
-            <SupabaseUserProvider>{children}</SupabaseUserProvider>
+            <SupabaseUserProvider>
+              <SocketProvider>
+                {children}
+                <Toaster />
+              </SocketProvider>
+            </SupabaseUserProvider>
           </AppStateProvider>
         </ThemeProvider>
       </body>

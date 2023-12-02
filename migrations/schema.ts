@@ -1,4 +1,3 @@
-import { sql } from 'drizzle-orm';
 import {
   bigint,
   boolean,
@@ -12,6 +11,7 @@ import {
   uuid,
 } from 'drizzle-orm/pg-core';
 
+import { relations, sql } from 'drizzle-orm';
 export const keyStatus = pgEnum('key_status', [
   'expired',
   'invalid',
@@ -31,8 +31,8 @@ export const keyType = pgEnum('key_type', [
   'aead-det',
   'aead-ietf',
 ]);
-export const factorType = pgEnum('factor_type', ['webauthn', 'totp']);
 export const factorStatus = pgEnum('factor_status', ['verified', 'unverified']);
+export const factorType = pgEnum('factor_type', ['webauthn', 'totp']);
 export const aalLevel = pgEnum('aal_level', ['aal3', 'aal2', 'aal1']);
 export const codeChallengeMethod = pgEnum('code_challenge_method', [
   'plain',
@@ -53,6 +53,22 @@ export const subscriptionStatus = pgEnum('subscription_status', [
   'canceled',
   'active',
   'trialing',
+]);
+export const equalityOp = pgEnum('equality_op', [
+  'in',
+  'gte',
+  'gt',
+  'lte',
+  'lt',
+  'neq',
+  'eq',
+]);
+export const action = pgEnum('action', [
+  'ERROR',
+  'TRUNCATE',
+  'DELETE',
+  'UPDATE',
+  'INSERT',
 ]);
 
 export const workspaces = pgTable('workspaces', {
@@ -187,7 +203,6 @@ export const subscriptions = pgTable('subscriptions', {
 });
 
 export const collaborators = pgTable('collaborators', {
-  id: uuid('id').defaultRandom().primaryKey().notNull(),
   workspaceId: uuid('workspace_id')
     .notNull()
     .references(() => workspaces.id, { onDelete: 'cascade' }),
@@ -197,4 +212,16 @@ export const collaborators = pgTable('collaborators', {
   userId: uuid('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
+  id: uuid('id').defaultRandom().primaryKey().notNull(),
 });
+
+export const productsRelations = relations(products, ({ many }) => ({
+  prices: many(prices),
+}));
+
+export const pricesRelations = relations(prices, ({ one }) => ({
+  product: one(products, {
+    fields: [prices.productId],
+    references: [products.id],
+  }),
+}));

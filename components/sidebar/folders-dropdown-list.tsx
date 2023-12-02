@@ -1,8 +1,7 @@
 'use client';
-// // import useSupabaseRealtime from '@/lib/hooks/useSupabaseRealtime';
-// import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
+import useSupabaseRealtime from '@/lib/hooks/useSupabaseRealtime';
+import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
 import { useSupabaseUser } from '@/lib/providers/supabase-user-provider';
-// import { createFolder } from '@/lib/supabase/queries';
 import { Folder } from '@/lib/supabase/supabase.types';
 import { PlusIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -10,10 +9,10 @@ import { v4 } from 'uuid';
 import TooltipComponent from '../global/tooltip-component';
 import { Accordion } from '../ui/accordion';
 import { useToast } from '../ui/use-toast';
-// import Dropdown from './Dropdown';
 
 import { useAppState } from '@/lib/providers/state-provider';
 import { createFolder } from '@/lib/supabase/queries';
+import Dropdown from './Dropdown';
 
 interface FoldersDropdownListProps {
   workspaceFolders: Folder[];
@@ -24,9 +23,9 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
   workspaceFolders,
   workspaceId,
 }) => {
-  // useSupabaseRealtime();
+  useSupabaseRealtime();
   const { state, dispatch, folderId } = useAppState();
-  // const { open, setOpen } = useSubscriptionModal();
+  const { open, setOpen } = useSubscriptionModal();
   const { toast } = useToast();
   const [folders, setFolders] = useState(workspaceFolders);
   const { subscription } = useSupabaseUser();
@@ -62,7 +61,7 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
   //add folder
   const addFolderHandler = async () => {
     if (folders.length >= 3 && !subscription) {
-      // setOpen(true); //TODO
+      setOpen(true);
       return;
     }
     const newFolder: Folder = {
@@ -139,7 +138,7 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
         defaultValue={[folderId || '']}
         className='pb-20'
       >
-        {/* {folders
+        {folders
           .filter((folder) => !folder.inTrash)
           .map((folder) => (
             <Dropdown
@@ -149,7 +148,7 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
               id={folder.id}
               iconId={folder.iconId}
             />
-          ))} */}
+          ))}
       </Accordion>{' '}
     </>
   );

@@ -13,6 +13,7 @@ import { ScrollArea } from '../ui/scroll-area';
 import FoldersDropdownList from './folders-dropdown-list';
 import NativeNavigation from './native-navigation';
 import PlanUsage from './plan-usage';
+import UserCard from './user-card';
 import WorkspaceDropdown from './workspace-dropdown';
 interface SidebarProps {
   params: { workspaceId: string };
@@ -52,33 +53,34 @@ const Sidebar: React.FC<SidebarProps> = async ({ params, className }) => {
   return (
     <aside
       className={twMerge(
-        'hidden sm:flex sm:flex-col w-[280px] shrink-0 p-4 md:gap-4 !justify-between',
+        '  hidden   sm:flex sm:flex-col w-[280px] shrink-0 p-4 md:gap-4 !justify-between',
         className
       )}
     >
-      <div>
-        <WorkspaceDropdown
-          privateWorkspaces={privateWorkspaces}
-          sharedWorkspaces={sharedWorkspaces}
-          collaboratingWorkspaces={collaboratingWorkspaces}
-          defaultValue={[
-            ...privateWorkspaces,
-            ...collaboratingWorkspaces,
-            ...sharedWorkspaces,
-          ].find((workspace) => workspace.id === params.workspaceId)}
-        />
-        <PlanUsage
-          foldersLength={workspaceFolderData?.length || 0}
-          subscription={subscriptionData}
-        />
-        <NativeNavigation myWorkspaceId={params.workspaceId} />
-        <ScrollArea
-          className='overflow-scroll relative
+      <div className='h-full flex flex-col justify-between'>
+        <div>
+          <WorkspaceDropdown
+            privateWorkspaces={privateWorkspaces}
+            sharedWorkspaces={sharedWorkspaces}
+            collaboratingWorkspaces={collaboratingWorkspaces}
+            defaultValue={[
+              ...privateWorkspaces,
+              ...collaboratingWorkspaces,
+              ...sharedWorkspaces,
+            ].find((workspace) => workspace.id === params.workspaceId)}
+          />
+          <PlanUsage
+            foldersLength={workspaceFolderData?.length || 0}
+            subscription={subscriptionData}
+          />
+          <NativeNavigation myWorkspaceId={params.workspaceId} />
+          <ScrollArea
+            className='overflow-auto relative
           h-[450px]
         '
-        >
-          <div
-            className='pointer-events-none 
+          >
+            <div
+              className='pointer-events-none 
           w-full 
           absolute 
           bottom-0 
@@ -86,14 +88,18 @@ const Sidebar: React.FC<SidebarProps> = async ({ params, className }) => {
           bg-gradient-to-t 
           from-background 
           to-transparent 
-          z-40'
-          />
-          <FoldersDropdownList
-            workspaceFolders={workspaceFolderData || []}
-            workspaceId={params.workspaceId}
-          />
-        </ScrollArea>
-        {/* <UserCard subscription={subscriptionData} /> */}
+          z-40
+          '
+            />
+            <FoldersDropdownList
+              workspaceFolders={workspaceFolderData || []}
+              workspaceId={params.workspaceId}
+            />
+          </ScrollArea>
+        </div>
+        <div>
+          <UserCard subscription={subscriptionData} />
+        </div>
       </div>
     </aside>
   );
