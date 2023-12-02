@@ -73,7 +73,6 @@ const SettingsForm = () => {
   const [uploadingProfilePic, setUploadingProfilePic] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [loadingPortal, setLoadingPortal] = useState(false);
-
   //WIP PAYMENT PORTAL
 
   const redirectToCustomerPortal = async () => {
@@ -83,6 +82,7 @@ const SettingsForm = () => {
         url: '/api/create-portal-link',
       });
       window.location.assign(url);
+      // router.push('url');
     } catch (error) {
       console.log(error);
       setLoadingPortal(false);
